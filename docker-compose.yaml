@@ -1,0 +1,21 @@
+services:
+  backend:
+    container_name: "fuel-backend"
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - database
+
+  database:
+    image: postgres:17
+    container_name: "fuel-database"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
